@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "S2LP_WMBus.h"
 #include "S2LP_Config.h"
 #include "S2LP_Middleware_Config.h"
@@ -15,6 +17,14 @@ void S2LP_HandleGPIOInterrupt() {
       /* Get the IRQ status */
     S2LPGpioIrqGetStatus(&xIrqStatus);
 
+    /* Check the S2LP RX_DATA_DISC IRQ flag */
+    if(xIrqStatus.IRQ_RX_DATA_DISC) {
+	printf("DATA DISCARDED\n\r");
+
+	/* RX command - to ensure the device will be ready for the next reception */
+	S2LPCmdStrobeRx();
+    }
+
     /* Check the S2LP RX_DATA_READY IRQ flag */
     if(xIrqStatus.IRQ_RX_DATA_READY) {
 	/* Get the RX FIFO size */
@@ -29,6 +39,16 @@ void S2LP_HandleGPIOInterrupt() {
 	/* RX command - to ensure the device will be ready for the next reception */
 	S2LPCmdStrobeRx();
 
+        if (!(s2lpRxData[0] == 0x19 && s2lpRxData[1] == 0x44 && s2lpRxData[2] == 0x30 && s2lpRxData[3] == 0x4C)) {
+          /* Let's not waste time checking the whole frame or calculting CRCs if the 1st 4 bytes are not the ones we're looking for */
+          return;
+        }
+
+                for (uint8_t i = 0; i<cRxData; i++) {
+          printf("%.2X ", s2lpRxData[i]);
+        }
+        printf("\r\n");
+        
         /* Let's see if we're dealing with a correct WMBus frame */
         uint8_t LField;
         uint8_t CField;
@@ -49,6 +69,7 @@ void S2LP_HandleGPIOInterrupt() {
             }
             
             uint8_t t = cRxData;
+            printf("%.6x total: %u, last month: %u\r\n", A_Id, total_consumption, last_month_total_consumption);
             t++;
         }
     }
@@ -206,6 +227,7 @@ void S2LP_ConfigureForWMBusT1Receiver(void) {
 void S2LP_ConfigureEnableIrqs(void) {
     /* S2LP IRQs enable */
     S2LPGpioIrqDeInit(&xIrqStatus);
+    S2LPGpioIrqConfig(RX_DATA_DISC,S_ENABLE);
     S2LPGpioIrqConfig(RX_DATA_READY,S_ENABLE);
 }
 
@@ -216,4 +238,3 @@ void S2LP_CompleteConfiguration(void) {
     /* RX command */
     S2LPCmdStrobeRx();
 }
-

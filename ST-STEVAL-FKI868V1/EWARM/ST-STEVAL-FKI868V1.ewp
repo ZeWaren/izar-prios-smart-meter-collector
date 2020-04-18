@@ -1103,6 +1103,12 @@
     <group>
         <name>Drivers</name>
         <group>
+            <name>BSP</name>
+            <file>
+                <name>$PROJ_DIR$\..\Drivers\BSP\src\SDK_EVAL_Com_DMA.c</name>
+            </file>
+        </group>
+        <group>
             <name>CMSIS</name>
             <file>
                 <name>$PROJ_DIR$\..\Src\system_stm32l0xx.c</name>

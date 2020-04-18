@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <fileVersion>4</fileVersion>
-    <fileChecksum>470221983</fileChecksum>
+    <fileChecksum>719233335</fileChecksum>
     <configuration>
         <name>ST-STEVAL-FKI868V1</name>
         <outputs>
@@ -238,6 +238,7 @@
             <file>$PROJ_DIR$\ST-STEVAL-FKI868V1\Obj\system_stm32l0xx.__cstat.et</file>
             <file>$PROJ_DIR$\ST-STEVAL-FKI868V1\Obj\stm32l0xx_hal_pwr.__cstat.et</file>
             <file>$PROJ_DIR$\ST-STEVAL-FKI868V1\Obj\stm32l0xx_hal.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\BSP\src\SDK_EVAL_Com_DMA.c</file>
             <file>$PROJ_DIR$\ST-STEVAL-FKI868V1\Obj\S2LP_PktWMbus.__cstat.et</file>
             <file>$PROJ_DIR$\ST-STEVAL-FKI868V1\Obj\S2LP_PacketHandler.__cstat.et</file>
             <file>$PROJ_DIR$\ST-STEVAL-FKI868V1\Obj\S2LP_Radio.__cstat.et</file>
@@ -246,6 +247,8 @@
             <file>$PROJ_DIR$\ST-STEVAL-FKI868V1\Obj\S2LP_Timer.__cstat.et</file>
             <file>$PROJ_DIR$\ST-STEVAL-FKI868V1\Obj\WMBus.__cstat.et</file>
             <file>$PROJ_DIR$\ST-STEVAL-FKI868V1\Obj\S2LP_PktBasic.__cstat.et</file>
+            <file>$PROJ_DIR$\ST-STEVAL-FKI868V1\Obj\SDK_EVAL_Com_DMA.xcl</file>
+            <file>$PROJ_DIR$\ST-STEVAL-FKI868V1\Obj\SDK_EVAL_Com_DMA.o</file>
         </outputs>
         <file>
             <name>[ROOT_NODE]</name>
@@ -288,7 +291,7 @@
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 234</file>
+                    <file> 235</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
@@ -426,7 +429,7 @@
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 239</file>
+                    <file> 240</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
@@ -505,7 +508,7 @@
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 91 83 59 79 81 67 69 112 198 103 201 189 111 118 98 104 200 113 100 115 116 106 94 99 95 128 96 86 82 68 64 72 88 70 85 71 80 63 58 101 92 109 150 148 131 135 124 127 138 132 123 134 151 190 102 108 125 149 140 105 74 93 117 114 97 144 143 122 146 147 215 130 107</file>
+                    <file> 189 59 79 81 67 69 111 91 83 112 198 103 201 118 98 104 200 113 100 115 116 106 94 99 95 128 96 86 82 68 64 72 88 70 85 71 80 63 58 101 92 109 150 148 131 135 124 127 138 132 123 134 151 190 102 108 125 149 140 105 74 93 117 114 97 144 143 122 146 147 215 130 107</file>
                 </tool>
             </inputs>
         </file>
@@ -518,7 +521,7 @@
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 235</file>
+                    <file> 236</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
@@ -551,7 +554,7 @@
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 110 86 82 68 64 72 88 70 83 59 79 81 67 69 85 71 80 63 58 101 92 111 109 150 148 131 135 124 127 138 132 123 134 151 190 102 108 125 149 91 128 96 118 140 105 74 93 117 114 97</file>
+                    <file> 110 86 82 68 64 72 88 70 83 59 79 81 67 69 85 71 80 63 58 101 92 111 109 150 148 131 135 124 127 138 132 123 134 151 190 102 108 125 149 91 189 215 105 74 128 96 118 140 93 117 114 97</file>
                 </tool>
             </inputs>
         </file>
@@ -619,7 +622,7 @@
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 238</file>
+                    <file> 239</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
@@ -642,7 +645,7 @@
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 233</file>
+                    <file> 234</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
@@ -711,7 +714,7 @@
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 240</file>
+                    <file> 241</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
@@ -826,7 +829,7 @@
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 236</file>
+                    <file> 237</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
@@ -855,7 +858,7 @@
             <inputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 139 168 129 65 75 216 142 137 193 73 187 51 192 195 196 60 119 62 34 30 179 181 171 161 182 49 180 173 172 163 166 167 170 77 29 50 54 38 36 152 90 145 133 121 199</file>
+                    <file> 139 168 129 65 75 216 142 137 193 73 187 51 192 195 196 60 119 243 62 34 30 179 181 171 161 182 49 180 173 172 163 166 167 170 77 29 50 54 38 36 152 90 145 133 121 199</file>
                 </tool>
             </inputs>
         </file>
@@ -1121,7 +1124,7 @@
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 237</file>
+                    <file> 238</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
@@ -1180,6 +1183,19 @@
                     <file> 86 82 68 64 72 88 70 83 59 79 81 67 69 85 71 80 63 58 101 92 111 109 150 148 131 135 124 127 138 132 123 134 151 190 102 108 125 149</file>
                 </tool>
             </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\BSP\src\SDK_EVAL_Com_DMA.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 243</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 242</file>
+                </tool>
+            </outputs>
         </file>
     </configuration>
 </project>
