@@ -129,7 +129,7 @@ void S2LP_ConfigureForWMBusT1Receiver(void) {
 
     /* S2LP IRQs enable */
     S2LPGpioIrqDeInit(&xIrqStatus);
-    S2LPGpioIrqConfig(RX_DATA_DISC,S_ENABLE);
+    //S2LPGpioIrqConfig(RX_DATA_DISC,S_ENABLE);
     S2LPGpioIrqConfig(RX_DATA_READY,S_ENABLE);
 
     /* payload length config */
