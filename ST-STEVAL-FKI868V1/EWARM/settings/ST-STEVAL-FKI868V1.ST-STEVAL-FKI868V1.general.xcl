@@ -1,0 +1,15 @@
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\arm\bin\armproc.dll" 
+
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\arm\bin\armstlink2.dll" 
+
+"C:\Users\ZWM\Desktop\meters\c_code\ST-STEVAL-FKI868V1\EWARM\ST-STEVAL-FKI868V1\Exe\ST-STEVAL-FKI868V1.out" 
+
+--plugin="C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\arm\bin\armbat.dll" 
+
+--device_macro="C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\arm\config\debugger\ST\STM32L0xx.dmac" 
+
+--flash_loader="C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\arm\config\flashloader\ST\FlashSTM32L0xxx8.board" 
+
+
+
+
