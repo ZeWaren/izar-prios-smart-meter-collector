@@ -60,8 +60,6 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-uint8_t all_registers[100];
-
 uint32_t M2S_GPIO_PIN_IRQ;
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
@@ -75,8 +73,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   * @brief  The application entry point.
   * @retval int
   */
-int main(void)
-{
+int main(void) {
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -94,11 +91,6 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* USER CODE BEGIN 2 */
- 
   SdkEvalComInit();
   
   /* Configure the link between the main board and the S2-LP board */
@@ -112,19 +104,16 @@ int main(void)
   
   /* Mark the configuration of the S2-LP as done */
   S2LP_CompleteConfiguration();
-  
-  printf("Running\r\n");
-  
-  S2LPSpiReadRegisters(0x0C, 12, all_registers);
-  uint8_t x = all_registers[5];
-  x++;
-  
+
+  /* USER CODE END SysInit */
+
+  /* USER CODE BEGIN 2 */
+ 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+  while (1) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

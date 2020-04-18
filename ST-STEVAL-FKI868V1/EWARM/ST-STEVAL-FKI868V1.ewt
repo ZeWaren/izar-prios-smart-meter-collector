@@ -1455,6 +1455,9 @@
                 <name>$PROJ_DIR$\..\Drivers\S2LP_Library\src\S2LP_PktWMbus.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\Drivers\S2LP_Library\src\S2LP_Qi.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\Drivers\S2LP_Library\src\S2LP_Radio.c</name>
             </file>
             <file>
