@@ -1,18 +1,31 @@
+/**
+  ******************************************************************************
+  * @file           : S2LP_WMBus.c
+  * @brief          : Configure a ST-L2LP module to act as an IZAR WMBus
+                      receiver.
+  * @author         : Erwan Martin <public@fzwte.net>
+  ******************************************************************************
+  */
+/* C includes */
 #include <stdio.h>
 
+/* Platform includes */
 #include "S2LP_WMBus.h"
 #include "S2LP_Config.h"
 #include "S2LP_Middleware_Config.h"
 #include "S2LP_Qi.h"
 #include "SDK_UTILS_Timers.h"
 
+/* Application includes */
 #include "WMBus.h"
 #include "PRIOS.h"
 #include "S2LP_WMBus_T1.h"
 
+/* Interruption related elements */
 #define IRQ_PREEMPTION_PRIORITY         0x03
-
 S2LPIrqs xIrqStatus;
+
+/* Variable to hold the received data */
 uint8_t s2lpRxData[64];
 
 void S2LP_HandleGPIOInterrupt() {
@@ -72,11 +85,16 @@ void S2LP_HandleGPIOInterrupt() {
                 return;
             }
             
+            /* Output the data on the COM port */
             printf("%.6x,%u,%u\r\n", A_Id, total_consumption, last_month_total_consumption);
         }
     }
 }
 
+/**
+  * @brief Configure the SPI link between the nucleo board and the S2LP board.
+  * @param uint32_t *PinIRQ Return the GPIO IRQ reference
+  */
 void S2LP_ConfigureSlaveBoardLink(uint32_t *PinIRQ) {
     /* Put the radio off */
     S2LPShutdownInit();
@@ -102,6 +120,9 @@ void S2LP_ConfigureSlaveBoardLink(uint32_t *PinIRQ) {
     S2LP_Middleware_GpioInterruptCmd(M2S_GPIO_3, IRQ_PREEMPTION_PRIORITY, 0, ENABLE);
 }
 
+/**
+  * @brief Configure the S2-LP as a WMBus T1 receiver.
+  */
 void S2LP_ConfigureForWMBusT1Receiver(void) {
     SRadioInit xRadioInit = {
         BASE_FREQUENCY,
@@ -144,6 +165,9 @@ void S2LP_ConfigureForWMBusT1Receiver(void) {
     S2LPRadioSetRssiThreshdBm(RSSI_THRESHOLD);
 }
 
+/**
+  * @brief Enable the IRQ of the S2-LP board.
+  */
 void S2LP_ConfigureEnableIrqs(void) {
     /* S2LP IRQs enable */
     S2LPGpioIrqDeInit(&xIrqStatus);
@@ -151,7 +175,10 @@ void S2LP_ConfigureEnableIrqs(void) {
     S2LPGpioIrqConfig(RX_DATA_READY,S_ENABLE);
 }
 
-void S2LP_CompleteConfiguration(void) {
+/**
+  * @brief Complete the configuration of the S2-LP board, and start reception.
+  */
+void S2LP_CompleteConfigurationAndStart(void) {
     /* Clear the initial state of the IRQ registers */
     S2LPGpioIrqClearStatus();
     

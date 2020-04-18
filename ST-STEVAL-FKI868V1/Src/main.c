@@ -3,17 +3,7 @@
   ******************************************************************************
   * @file           : main.c
   * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
+  * @author         : Erwan Martin <public@fzwte.net>
   ******************************************************************************
   */
 /* USER CODE END Header */
@@ -36,7 +26,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define USE_VCOM
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -102,13 +92,13 @@ int main(void) {
   /* Configure the S2-LP as a WMBus T1 receiver */
   S2LP_ConfigureForWMBusT1Receiver();
   
-  /* Mark the configuration of the S2-LP as done */
-  S2LP_CompleteConfiguration();
-
   /* USER CODE END SysInit */
 
   /* USER CODE BEGIN 2 */
- 
+  
+  /* Mark the configuration of the S2-LP as done */
+  S2LP_CompleteConfigurationAndStart();
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */

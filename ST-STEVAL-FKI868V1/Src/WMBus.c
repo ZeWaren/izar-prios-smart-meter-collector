@@ -1,4 +1,15 @@
+/**
+  ******************************************************************************
+  * @file           : WMBus.c
+  * @brief          : Logic to validate and parse a WMBus frame
+  * @author         : Erwan Martin <public@fzwte.net>
+  ******************************************************************************
+  */
+
+/* C Includes */
 #include <stdint.h>
+
+/* Application includes */
 #include "WMBus.h"
 
 #define CRC_POLYNOM			0x3D65
@@ -51,6 +62,19 @@ uint8_t CRCCheck(uint8_t *pStart, uint8_t *pStop) {
   return 0;
 }
 
+/**
+  * @brief Check if data correspond to a proper WMBus frame, and return the
+  *        protocol header values from it.
+  * @param uint8_t *frame The location of the frame
+  * @param uint8_t len The length of the frame
+  * @param uint8_t *LField Where to store the L-field
+  * @param uint8_t *CField Where to store the C-field
+  * @param uint16_t *MField Where to store the M-field
+  * @param uint32_t *A_Id Where to store the id part of the A-field
+  * @param uint8_t *A_Ver Where to store the version part of the A-field
+  * @param uint8_t *A_Type Where to store the type part of the A-field
+  * @retval uint8_t 1 if the frame is valid, 0 otherwise
+  */
 uint8_t CheckWMBusFrame(uint8_t *frame, uint8_t len, uint8_t *LField, uint8_t *CField, uint16_t *MField, uint32_t *A_Id, uint8_t *A_Ver, uint8_t *A_Type) {
     if (len < 13) {
         /* The frame is too short to be what we want */
