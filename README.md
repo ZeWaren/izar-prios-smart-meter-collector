@@ -38,7 +38,7 @@ The device outputs every smart meter readings in real time:
     20d56c1d,91966,90586
     20d577ca,80416,77826
 
-The format is: `[device identifier],[current_reading],[last_month_reading]`, with both readings in cubic meters (m3).
+The format is: `[device identifier],[current_reading],[last_month_reading]`, with both readings in liters (102543 liters = 102.543m3).
 
 ### Shell
 
