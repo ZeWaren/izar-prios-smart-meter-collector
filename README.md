@@ -30,15 +30,41 @@ Open the USB virtual COM port provided by the board, with speed 115200.
 The device outputs every smart meter readings in real time:
     
     # socat open:/dev/cuaU0,raw,echo=0,ispeed=115200,ospeed=115200 -
-    20d51a73,100750,99935
-    20d52c1a,330604,329942
-    20d53a72,65299,64680
-    20d54c16,92546,92277
-    20d55c1e,102543,101646
-    20d56c1d,91966,90586
-    20d577ca,80416,77826
+    20d01c15,70.686996,69.581001,m3,2020,04,01,9.0,32,1,0,0,0,0,0,0,0,0,0,0,0,0
+    20d02a72,65.434998,64.680000,m3,2020,04,01,9.0,32,3,0,0,0,0,0,0,0,0,0,0,0,0
+    20d03c19,174.847000,172.501999,m3,2020,04,01,9.0,32,3,0,0,0,0,0,0,0,0,0,0,0,0
+    20d04a74,59.242001,58.627998,m3,2020,04,01,9.0,32,2,0,0,0,0,0,0,0,0,0,0,0,0
+    20d05c1d,92.295998,90.585999,m3,2020,04,01,9.0,32,2,0,0,0,0,0,0,0,0,0,0,0,0
+    20d06a73,100.885002,99.934998,m3,2020,04,01,9.0,32,2,0,0,0,0,0,0,0,0,0,0,0,0
+    20d07c1c,301.843994,300.838989,m3,2020,04,01,9.0,32,2,0,0,0,0,0,0,0,0,0,0,0,0
+    20d08c1e,102.694000,101.646004,m3,2020,04,01,9.0,32,0,0,0,0,0,0,0,0,0,0,0,0,0
+    20d09c16,92.638000,92.277000,m3,2020,04,01,9.0,32,2,0,0,0,0,0,0,0,0,0,0,0,0
 
-The format is: `[device identifier],[current_reading],[last_month_reading]`, with both readings in liters (102543 liters = 102.543m3).
+The fields are:
+- Meter id,
+- Current value,
+- H0 value,
+- measurement unit,
+- Year of H0,
+- Month of H0,
+- Day of H0,
+- Remaining battery life (years),
+- Radio interval (seconds),
+- Random generator,
+- Alarm: general_alarm,
+- Alarm: leakage_currently,
+- Alarm: leakage_previously,
+- Alarm: meter_blocked,
+- Alarm: back_flow,
+- Alarm: underflow,
+- Alarm: overflow,
+- Alarm: submarine,
+- Alarm: sensor_fraud_currently,
+- Alarm: sensor_fraud_previously,
+- Alarm: mechanical_fraud_currently,
+- Alarm: mechanical_fraud_previously
+
+In my case, the H0 value is the reading at the ten of the last month.
 
 ### Shell
 
@@ -47,29 +73,64 @@ shell scripting:
 
     socat open:/dev/cuaU0,raw,echo=0,ispeed=115200,ospeed=115200 - | grep 20d78c1e | awk '{cmd="date +%s"; (cmd | getline date); close(cmd); print date "," $1}' >> /var/log/izar_local.log
 
-### Python
+Here's how to convert a line to JSON using jq:
 
-Reading the values in Python is trivial as well:
-
-```
-import serial
-with serial.Serial('/dev/cuaU0', 115200, timeout=60) as ser:
-    while True:
-       line = ser.readline()
-       if not line:
-           continue
-       data = line.split(',')
-       print('Meter {}: current={}m3, last_month={}m3'.format(data[0], float(data[1]) / 1000, float(data[2]) / 1000))
-```
-
-```
-Meter 20d51c16: current=92.546m3, last_month=92.277m3
-Meter 20d52c1d: current=91.966m3, last_month=90.586m3
-Meter 20d53c1e: current=102.543m3, last_month=101.646m3
-Meter 20d547c6: current=77.408m3, last_month=76.001m3
-Meter 20d55a73: current=100.75m3, last_month=99.935m3
-Meter 20d56c1c: current=301.664m3, last_month=300.839m3
-```
+    $ echo "1587574231,20d78c16,92.638000,92.277000,m3,2020,04,01,9.0,32,0,0,0,0,0,0,0,0,0,0,0,0,0" | jq --slurp --raw-input --raw-output \
+    'split(",") |
+        {
+        "timestamp": .[0] | tonumber,
+        "meter_id": .[1],
+        "current_reading": .[2] | tonumber,
+        "h0_reading": .[3] | tonumber,
+        "measurement_unit": .[4],
+        "h0_year": .[5] | tonumber,
+        "h0_month": .[6] | tonumber,
+        "h0_day": .[7] | tonumber,
+        "remaining_battery_life": .[8] | tonumber,
+        "radio_interval": .[9] | tonumber,
+        "random_generator": .[10] | tonumber,
+        "alarms": {
+            "general_alarm": .[11] | test("1"),
+            "leakage_currently": .[12] | test("1"),
+            "leakage_previously": .[13] | test("1"),
+            "meter_blocked": .[14] | test("1"),
+            "back_flow": .[15] | test("1"),
+            "underflow": .[16] | test("1"),
+            "overflow": .[17] | test("1"),
+            "submarine": .[18] | test("1"),
+            "sensor_fraud_currently": .[19] | test("1"),
+            "sensor_fraud_previously": .[20] | test("1"),
+            "mechanical_fraud_currently": .[21] | test("1"),
+            "mechanical_fraud_previously": .[22] | test("1")
+        }}'
+        
+    {
+      "timestamp": 1587574231,
+      "meter_id": "20d78c16",
+      "current_reading": 92.638,
+      "h0_reading": 92.277,
+      "measurement_unit": "m3",
+      "h0_year": 2020,
+      "h0_month": 4,
+      "h0_day": 1,
+      "remaining_battery_life": 9,
+      "radio_interval": 32,
+      "random_generator": 0,
+      "alarms": {
+        "general_alarm": false,
+        "leakage_currently": false,
+        "leakage_previously": false,
+        "meter_blocked": false,
+        "back_flow": false,
+        "underflow": false,
+        "overflow": false,
+        "submarine": false,
+        "sensor_fraud_currently": false,
+        "sensor_fraud_previously": false,
+        "mechanical_fraud_currently": false,
+        "mechanical_fraud_previously": false
+      }
+    }
 
 ## Authors
 
