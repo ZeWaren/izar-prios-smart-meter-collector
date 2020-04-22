@@ -64,7 +64,7 @@ The fields are:
 - Alarm: mechanical_fraud_currently,
 - Alarm: mechanical_fraud_previously
 
-In my case, the H0 value is the reading at the ten of the last month.
+In my case, the H0 value is the reading at the end of the last month.
 
 ### Shell
 
