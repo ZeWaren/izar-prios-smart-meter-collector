@@ -48,7 +48,7 @@ uint16_t crcCalc(uint16_t crcReg, uint8_t crcData) {
 *       LINK_STATUS_INVALID_SIZE   - The data-field buffer is too large
 *
 */
-uint8_t CRCCheck(uint8_t *pStart, uint8_t *pStop) {
+uint8_t CRCCheck(const uint8_t * pStart, const uint8_t * const pStop) {
   uint16_t  seed=0x0000;
 
   while (pStart != pStop) {
@@ -75,7 +75,7 @@ uint8_t CRCCheck(uint8_t *pStart, uint8_t *pStop) {
   * @param uint8_t *A_Type Where to store the type part of the A-field
   * @retval uint8_t 1 if the frame is valid, 0 otherwise
   */
-uint8_t CheckWMBusFrame(uint8_t *frame, uint8_t len, uint8_t *LField, uint8_t *CField, uint16_t *MField, uint32_t *A_Id, uint8_t *A_Ver, uint8_t *A_Type) {
+uint8_t CheckWMBusFrame(const uint8_t *frame, const uint8_t len, uint8_t * const LField, uint8_t * const CField, uint16_t * const MField, uint32_t * const A_Id, uint8_t * const A_Ver, uint8_t * const A_Type) {
     if (len < 13) {
         /* The frame is too short to be what we want */
         return 0;
@@ -96,7 +96,7 @@ uint8_t CheckWMBusFrame(uint8_t *frame, uint8_t len, uint8_t *LField, uint8_t *C
     }
 
     if((len-12)%18!=0) {
-        crc &= CRCCheck(&frame[len-((len-12)%18)],&frame[len-2]);
+        crc &= CRCCheck(&frame[len-((len-12)%18)], &frame[len-2]);
         if (!crc) {
             return 0;
         }

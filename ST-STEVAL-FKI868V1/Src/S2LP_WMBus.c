@@ -80,13 +80,13 @@ void S2LP_HandleGPIOInterrupt() {
         
         /* The frame is an IZAR meter reporting data, let's handle it */
         if (LField == 0x19 && CField == 0x44 && MField == 0x4C30 && A_Ver == 0xD4 && A_Type == 0x01) {
-            uint32_t total_consumption, last_month_total_consumption;
-            if (!getMetricsFromPRIOSWMBusFrame(s2lpRxData, &total_consumption, &last_month_total_consumption)) {
+            izar_reading reading;
+            if (!getMetricsFromPRIOSWMBusFrame(s2lpRxData, &reading)) {
                 return;
             }
             
             /* Output the data on the COM port */
-            printf("%.6x,%u,%u\r\n", A_Id, total_consumption, last_month_total_consumption);
+            printIZARReadingAsCSV(A_Id, &reading);
         }
     }
 }
